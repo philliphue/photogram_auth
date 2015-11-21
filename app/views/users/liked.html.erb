@@ -1,0 +1,14 @@
+<div class="page-header">
+  <h3><%= @user.username.capitalize %> Likes</h3>
+</div>
+
+<% @photos.each do |photo| %>
+      <center>
+      <tr>
+        <td><%= photo.caption %></td>
+        <td><img src="<%= photo.image %>" class="img-responsive"></td>
+        <td>-</td>
+      </tr>
+      <center>
+      <% end %>
+
