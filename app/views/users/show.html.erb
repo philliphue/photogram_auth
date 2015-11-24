@@ -18,13 +18,6 @@
       <dd><%= @user.comments.count %></dd>
 
     </dl>
-
-    <div class="btn-group btn-group-justified">
-      <a href="/photos" class="btn btn-primary">
-        Back
-      </a>
-
-    </div>
   </div>
 </div>
 
@@ -33,7 +26,13 @@
       <tr>
         <td><%= photo.caption %></td>
         <td><img src="<%= photo.image %>" class="img-responsive"></td>
-        <td>-</td>
       </tr>
+        <% photo.comments.each do |comment| %>
+      <div class="row">
+        <td>
+          <%=comment.body%>
+        </td>
+      </div>
+        <% end %>
       <center>
       <% end %>

@@ -9,11 +9,81 @@
       <dd><%= @photo.caption %></dd>
 
       <dt>Image</dt>
-      <dd><%= @photo.image %></dd>
+      <dd><img src="<%= @photo.image %>"></dd>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_like" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for user_id -->
+        <input type="hidden" id="user_id" name="user_id" value="<%= current_user.id %>">
+      </div>
+
+      <!-- Label and input for photo_id -->
+        <input type="hidden" id="photo_id" name="photo_id" value="<%= @photo.id %>">
+      </div>
+
+      <button class="btn btn-success">
+        Like
+      </button>
+    </form>
+  </div>
+</div>
 
       <dt>User</dt>
       <dd><%= @photo.user_id %></dd>
 
+      <dt>Favorited By</dt>
+      <dd>
+        <%= @photo.fans.pluck(:username).to_sentence %>
+      </dd>
+
+
+      <dt>Comments</dt>
+      <dd>
+      <ul>
+        <% @photo.comments.each do |comment| %>
+          <li>
+            <h6>
+              <%= comment.user.username %>
+              <small>
+                <%= time_ago_in_words(comment.created_at) %>
+              </small>
+            </h6>
+            <p><%= comment.body %></p>
+            </li>
+        <% end %>
+        <li>
+          <div class="row">
+  <div class="col-md-12">
+    <form action="/create_comment" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for photo_id -->
+        <input type="hidden" id="photo_id" name="photo_id" value="<%= @photo.id %>">
+
+      <!-- Label and input for body -->
+      <div class="form-group">
+        <label for="body" class="sr-only">
+          Body
+        </label>
+
+        <input type="text" id="body" name="body" placeholder="Add comment" class="form-control">
+      </div>
+
+      <!-- Label and input for user_id -->
+        <input type="hidden" id="user_id" name="user_id" value="<%= current_user.id %>">
+
+    </form>
+  </div>
+</div>
+
+        </li>
+      </dd>
+      </ul>
     </dl>
 
     <div class="btn-group btn-group-justified">
